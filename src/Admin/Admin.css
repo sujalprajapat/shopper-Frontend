@@ -1,0 +1,51 @@
+/* basic css */
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+}
+
+:root {
+    --theme: #112C33;
+    --theme1: #A7963C;
+    --theme2: #BFCCB8;
+    --theme3: #C5C098;
+    --theme4: #F1EFE2;
+    --white: #ffffff;
+    --black: #000000;
+    --hue: 223;
+    --bg: hsl(var(--hue), 90%, 95%);
+    --fg: hsl(var(--hue), 90%, 5%);
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+.space {
+    margin: 70px 20px;
+}
+
+/*  admin logic page */
+.admin_login_bg {
+    width: 100vw;
+    height: 100vh;
+    background: url('./Image/AdminLoginBg.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
