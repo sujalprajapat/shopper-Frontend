@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Modal, Typography } from '@mui/material';
 import { CiMail, CiPhone, CiUnlock, CiUser } from 'react-icons/ci';
+import axios from 'axios';
 function UserLogin({ isOpen, onClose }) {
     const [activeModal, setActiveModal] = useState('login');
     const modalStyle = {
@@ -15,6 +16,36 @@ function UserLogin({ isOpen, onClose }) {
         p: 5,
         outline: 'none',
     };
+
+    // backend connectivity 
+
+    const [Rname,setRname] = useState('');
+    const [Remail,setRemail] = useState('');
+    const [Rpassword,setRpassword] = useState('');
+    const [Rphone,setRphone] = useState('');
+    const [Rcomfpass,setRcomfpass] = useState('');
+    // const [Rphone,setRphone] = useState('');
+    function SignUpSubmit(e){
+        e.preventDefault();
+        if(Rname && Remail && Rpassword && Rphone && Rcomfpass){
+                if(Rpassword === Rcomfpass){
+                    axios.post('http://localhost:5000/user_signup', {
+                        name: Rname,
+                        email: Remail,
+                        password: Rpassword,
+                        phone_number: Rphone,
+                      }).then((response) => {
+                          setActiveModal('login');
+                      })
+                }
+                else{
+                    alert('Password does not match');
+                }
+        }
+        else{
+            alert('All fields are required');
+        }
+    }
     return (
         <>
             {/* Login Modal */}
@@ -72,25 +103,25 @@ function UserLogin({ isOpen, onClose }) {
                     <form className="registerform">
                         <div className="registerinput">
                             <CiUser />
-                            <input placeholder="Username" required />
+                            <input placeholder="Username" required onChange={(e) => setRname(e.target.value)}/>
                         </div>
                         <div className="registerinput">
                             <CiPhone />
-                            <input placeholder="Phone Number" required />
+                            <input placeholder="Phone Number" required onChange={(e)=>{setRphone(e.target.value)}} />
                         </div>
                         <div className="registerinput">
                             <CiMail />
-                            <input placeholder="Email" type="email" required />
+                            <input placeholder="Email" type="email" required onChange={(e)=>{setRemail(e.target.value)}} />
                         </div>
                         <div className="registerinput">
                             <CiUnlock />
-                            <input placeholder="Password" type="password" required />
+                            <input placeholder="Password" type="password" required onChange={(e)=>{setRpassword(e.target.value)}}/>
                         </div>
                         <div className="registerinput">
                             <CiUnlock />
-                            <input placeholder="Confirm Password" type="password" required />
+                            <input placeholder="Confirm Password" type="password" required onChange={(e)=>{setRcomfpass(e.target.value)}}/>
                         </div>
-                        <button class="w-100">
+                        <button class="w-100" onClick={SignUpSubmit}>
                             <div class="banner w-100">
                                 <a href="#3" class='butn butn__new'><span>Sign Up</span></a>
                             </div>
