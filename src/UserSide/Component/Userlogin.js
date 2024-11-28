@@ -4,6 +4,7 @@ import { CiMail, CiPhone, CiUnlock, CiUser } from 'react-icons/ci';
 import axios from 'axios';
 function UserLogin({ isOpen, onClose }) {
     const [activeModal, setActiveModal] = useState('login');
+    // const [userDetail,setUserDetail] = useState();
     const modalStyle = {
         position: 'absolute',
         top: '50%',
@@ -46,6 +47,26 @@ function UserLogin({ isOpen, onClose }) {
             alert('All fields are required');
         }
     }
+
+    const [Lemail,setLemail] = useState('');
+    const [Lpass,setLpass] = useState('');
+
+    function Login(){
+        if(Lemail && Lpass){
+            axios.post('http://localhost:5000/user_login',{
+                email: Lemail,
+                password:Lpass 
+            }).then((response)=>{
+                if(response.data.status === true){
+                    setActiveModal(null);
+                    // setUserDetail(response.data);
+                }
+                else {
+                    alert(response.data.msg)
+                }
+            })
+        }
+    }
     return (
         <>
             {/* Login Modal */}
@@ -63,17 +84,17 @@ function UserLogin({ isOpen, onClose }) {
                     <form className="registerform">
                         <div className="registerinput">
                             <CiMail />
-                            <input placeholder="Email" type="email" required />
+                            <input placeholder="Email" type="email" required onChange={(e)=>{setLemail(e.target.value)}}/>
                         </div>
                         <div className="registerinput">
                             <CiUnlock />
-                            <input placeholder="Password" type="password" required />
+                            <input placeholder="Password" type="password" required onChange={(e)=>{setLpass(e.target.value)}}/>
                         </div>
-                        <button class="w-100">
+                        <div class="w-100" onClick={Login}>
                             <div class="banner w-100">
                                 <a href="#1" class='butn butn__new'><span>Login</span></a>
                             </div>
-                        </button>
+                        </div>
                         <a
                             href="#2"
                             className="register_link"
@@ -121,11 +142,11 @@ function UserLogin({ isOpen, onClose }) {
                             <CiUnlock />
                             <input placeholder="Confirm Password" type="password" required onChange={(e)=>{setRcomfpass(e.target.value)}}/>
                         </div>
-                        <button class="w-100" onClick={SignUpSubmit}>
+                        <div class="w-100" onClick={SignUpSubmit}>
                             <div class="banner w-100">
                                 <a href="#3" class='butn butn__new'><span>Sign Up</span></a>
                             </div>
-                        </button>
+                        </div>
                         <a
                             href="#4"
                             className="register_link"

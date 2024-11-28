@@ -7,7 +7,8 @@ import React, { useState } from 'react';
 import { Offcanvas } from 'react-bootstrap';
 import { Avatar, Badge,} from '@mui/material';
 import UserLogin from './Userlogin';
-function Header() {
+function Header({user}) {
+    console.log(user);
     // offcanvas using react
     const [show, setShow] = useState(false);
 
